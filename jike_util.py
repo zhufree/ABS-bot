@@ -70,7 +70,7 @@ def jike_post(msg):
     elif res.status_code == 401:
         if refreshToken() and retry_count == 0:
             retry_count += 1
-            post(msg)
+            jike_post(msg)
         else:
             return {
                 'success': False,
