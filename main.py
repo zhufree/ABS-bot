@@ -3,6 +3,7 @@ from qqbot import Message
 from config import *
 import random, re
 import httpx
+from jike_util import jike_post
 
 token = qqbot.Token(app_id, token)
 api = qqbot.UserAPI(token, False)
@@ -44,13 +45,15 @@ def _message_handler(event, message: Message):
             send_msg("<@{}> {}".format(message.author.id, 'saved to flomo'), message)
         else:
             send_msg("<@{}> {}".format(message.author.id, 'save to flomo failed'), message)
+    if '.jike' in msg and message.author.id == owner_id:
+        result = jike_post(msg)
+        if result['success']:
+            send_msg("<@{}> {}".format(message.author.id, 'send to jike succeed'), message)
+        else:
+            send_msg("<@{}> {}".format(message.author.id, 'send to jike failed, error code: {}'.format(result['error'])), message)
 
-
-# 先初始化需要用的 `token` 对象
-# 通过 `qqbot.HandlerType` 定义需要监听的事件（部分事件可能需要权限申请）可以注册多个
 at_event_handler = qqbot.Handler(qqbot.HandlerType.AT_MESSAGE_EVENT_HANDLER, _at_message_handler)
 msg_event_handler = qqbot.Handler(qqbot.HandlerType.MESSAGE_EVENT_HANDLER, _message_handler)
-# 通过 `qqbot.listen_events` 注册需要监听的事件
 qqbot.listen_events(token, False, at_event_handler, msg_event_handler)
 
 
