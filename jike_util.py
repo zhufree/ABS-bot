@@ -57,6 +57,7 @@ def refreshToken():
 
 def jike_post(msg):
     global retry_count
+    headers['x-jike-access-token'] = cur_access_token
     post_data = {
         'content': msg
         # 'pictureKeys': 'xx.jpg'
@@ -68,9 +69,10 @@ def jike_post(msg):
             'success': True
         }
     elif res.status_code == 401:
-        if refreshToken() and retry_count == 0:
+        refreshResult = refreshToken()
+        if refreshResult and retry_count == 0:
             retry_count += 1
-            jike_post(msg)
+            return jike_post(msg)
         else:
             return {
                 'success': False,
