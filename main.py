@@ -34,6 +34,9 @@ def _at_message_handler(event, message: Message):
 def _message_handler(event, message: Message):
     qqbot.logger.info("event %s" % event + ",receive message %s" % message.content)
     msg = message.content
+    attachments = []
+    if 'attachments' in dir(message):
+        attachments = ['https://' + a.url for a in message.attachments]
     if msg.startswith("抽签 "):
         choice_list = msg.split(' ')[1:]
         # send = qqbot.MessageSendRequest("<@%s>谢谢你，加油" % message.author.id, message.id)
@@ -46,7 +49,7 @@ def _message_handler(event, message: Message):
         else:
             send_msg("<@{}> {}".format(message.author.id, 'save to flomo failed'), message)
     if '.jike' in msg and message.author.id == owner_id:
-        result = jike_post(msg)
+        result = jike_post(msg, attachments)
         if result['success']:
             send_msg("<@{}> {}".format(message.author.id, 'send to jike succeed'), message)
         else:
