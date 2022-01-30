@@ -15,8 +15,9 @@
 - [ ] 订阅超话更新
 - [ ] 订阅LofterTAG更新
 
-## 同步功能（将频道内发布的消息同步到其他平台）
-- [x] Flomo（搭配flomo同步到notion和n8n等平台可实现同步到discord，twitter和telegram）
-- [x] Jike
-  - [ ] 带图
-- [ ] weibo
+## 同步功能
+- [x] qq-Flomo（搭配flomo同步到notion和n8n等平台可实现同步到discord，twitter和telegram）
+- [x] qq-Jike
+  - [x] 带图
+- [x] weibo-qq
+- [x] jike-qq
