@@ -7,7 +7,7 @@ from jike_util import jike_post
 from rss_util import parse_rss
 
 BASE_URL = 'https://free-rss-zhufree.vercel.app/'
-last_query_time = time.time() - 60*30
+last_query_time = time.time() - 60*5
 query_lock = False
 
 rss_self_list = [
@@ -45,7 +45,7 @@ def check_statues(message):
     if query_lock:
         return
     query_lock = True
-    if time.time() - last_query_time > 10:
+    if time.time() - last_query_time > 60*10:
         try:
             for url in rss_self_list:
                 results = parse_rss(url, last_query_time)
@@ -57,7 +57,7 @@ def check_statues(message):
                         reply_msg(content, message)
                
         finally:
-            last_query_time = time.time() - 60*30
+            last_query_time = time.time()
             query_lock = False
 
 

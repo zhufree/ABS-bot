@@ -29,10 +29,15 @@ def parse_rss(rss_url, last_query_time):
                     extra.append(href)
         real_time_unix = time.mktime(e.published_parsed)+8*3600
         real_show_time = time.asctime(time.localtime(real_time_unix))
+        if len(doc.text()) > 500:
+            content = doc.text()[:500] + '...'
+        else:
+            content = doc.text()
+        content = content.replace('https://', 'http://').replace('http://', '')
         if real_time_unix > last_query_time:
             result_list.append({
                 'title': e.title,
-                'content': doc.text(),
+                'content': content,
                 'img_urls': img_urls,
                 'ttarticle_link': ttarticle_link,
                 'extra': extra,
