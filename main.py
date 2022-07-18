@@ -70,12 +70,8 @@ def save_to_flomo(msg):
 
 # 定义注册事件回调执行函数,如 `_message_handler`
 def _at_message_handler(event, message: Message):
-    # qqbot.logger.info("event %s" % event + ",receive message %s" % message.content)
-    if message.channel_id == self_channel_id:
-        check_statues(message)
-    else:
-        send = qqbot.MessageSendRequest("<@%s>叫我干嘛？" % message.author.id, message.id)
-        msg_api.post_message(message.channel_id, send)
+    send = qqbot.MessageSendRequest("<@%s>叫我干嘛？" % message.author.id, message.id)
+    msg_api.post_message(message.channel_id, send)
 
 def _message_handler(event, message: Message):
     qqbot.logger.info("event %s" % event + ",receive message %s" % message.content)
@@ -104,5 +100,5 @@ def _message_handler(event, message: Message):
 at_event_handler = qqbot.Handler(qqbot.HandlerType.AT_MESSAGE_EVENT_HANDLER, _at_message_handler)
 msg_event_handler = qqbot.Handler(qqbot.HandlerType.MESSAGE_EVENT_HANDLER, _message_handler)
 qqbot.listen_events(token, False, at_event_handler, msg_event_handler)
-
+send_msg_to_channel("tet")
 
