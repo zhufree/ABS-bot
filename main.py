@@ -12,7 +12,6 @@ class ABSClient(botpy.Client):
         await message.reply(content=f'<@{message.author.id}>叫我干嘛？')
     async def on_message_create(self, message: Message):
         botpy.logger.info("receive message %s" % message.content)
-        message.content = message.content
         attachments = []
         if 'attachments' in dir(message):
             attachments = ['https://' + a.url for a in message.attachments]
